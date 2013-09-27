@@ -46,8 +46,8 @@ def import_zip(zip_fn):
 
         if filename not in zip_data:
             zip_data[filename] = (create_version, extract_version, flags, compress_method, modify_time, modify_date,
-                                crc32, compressed_size, uncompressed_size, filename_len, extra_len, commit_len,
-                                disk_number, internal_attr, external_attr, extra_field, commit, local_extra_field, data)
+                                crc32, compressed_size, uncompressed_size, filename_len, 0, commit_len,
+                                disk_number, internal_attr, external_attr, '', commit, '', data)
             fn_list.append(filename)
     
     return zip_data, fn_list
@@ -65,7 +65,7 @@ for filename in fn_list1:
     else:
         data = data1
     offset = zip_out.tell()
-    zip_out.write(PK34 + struct.pack('<HHHHHIIIH', *data[1:10]) + struct.pack('<H', len(data[17])) + filename + data[17])
+    zip_out.write(PK34 + struct.pack('<HHHHHIIIH', *data[1:10]) + struct.pack('<H', 0) + filename + data[17])
     zip_out.write(data[18])
     if data[9] != len(filename) or data[10] != len(data[15]) or data[11] != len(data[16]):
         print data[9], len(filename), data[10], len(data[15]), data[11], len(data[16])
