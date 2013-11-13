@@ -59,8 +59,8 @@ zip_out = open(sys.argv[3], 'wb')
 central_header = ''
 for filename in fn_list1:
     data1 = zip_data1[filename]
-    data2 = zip_data2[filename]
-    if data1[6] == data2[6] and data1[8] == data2[8] and data1[7] > data2[7]:
+    data2 = zip_data2.get(filename)
+    if data2 and data1[6] == data2[6] and data1[8] == data2[8] and data1[7] > data2[7]:
         data = data2
     else:
         data = data1
